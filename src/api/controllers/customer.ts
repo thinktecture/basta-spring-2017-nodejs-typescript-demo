@@ -26,7 +26,7 @@ export class CustomerController implements Controller {
     }
 
     private async _remove(req: Request, res: Response): Promise<void> {
-        customerService.remove(req.params.id);
+        await customerService.remove(req.params.id);
         res.send(200);
     }
 }

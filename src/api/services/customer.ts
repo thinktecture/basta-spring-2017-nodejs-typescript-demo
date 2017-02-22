@@ -3,8 +3,15 @@ import {databaseProvider} from '../database/index';
 
 export class CustomerService {
     public async get(id: number): Promise<CustomerInstance> {
-        return (await databaseProvider.get())
-            .Customer.findByPrimary(id);
+        const db = await databaseProvider.get();
+
+        return db.Customer.findByPrimary(id, {
+                include: [
+                    {
+                        model: db.Bill
+                    }
+                ]
+            });
     }
 
     public async create(customer: CustomerPojo): Promise<CustomerInstance> {

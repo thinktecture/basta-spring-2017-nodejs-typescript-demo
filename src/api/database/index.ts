@@ -1,6 +1,6 @@
-import {Model, Sequelize as SequelizeInstance} from 'sequelize';
-import Sequelize = require('sequelize');
+import {Sequelize as SequelizeInstance} from 'sequelize';
 import {modelInitializers, Models} from '../models/index';
+import Sequelize = require('sequelize');
 
 export interface DatabaseConfiguration {
     connectionString: string;
@@ -20,6 +20,7 @@ class Database {
         this._sequelize = new Sequelize(config.connectionString);
 
         this._initModels();
+        this._initRelationships();
 
         await this._sequelize.sync({
             force: true // Recreates the database when the server is started
@@ -33,6 +34,17 @@ class Database {
             .forEach(modelName => {
                 const initFn = modelInitializers[modelName];
                 this._models[modelName] = initFn(this._sequelize);
+            });
+    }
+
+    private _initRelationships(): void {
+        Object.keys(this._models)
+            .forEach(modelName => {
+                const model = this._models[modelName];
+
+                if (!!model.associate) {
+                    model.associate(this._models);
+                }
             });
     }
 }
@@ -60,4 +72,4 @@ export const databaseProvider = {
         modelInstance = await db.init();
         return modelInstance;
     }
-} ;
+};
