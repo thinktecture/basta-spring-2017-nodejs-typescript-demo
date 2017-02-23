@@ -1,6 +1,6 @@
 # BASTA! Spring 2017 Node.js with TypeScript
 
-Slides for this talk are on [Speakerdeck](https://speakerdeck.com/manuelrauber/web-apis-mit-node-dot-js-und-typescript-fur-net-entwickler).
+Slides for this talk are on [SpeakerDeck](https://speakerdeck.com/manuelrauber/web-apis-mit-node-dot-js-und-typescript-fur-net-entwickler).
 
 Very simple sample for Node.js Web API bootstrapping with restify using TypeScript.
 
